@@ -1,6 +1,7 @@
 const startupDebugger = require('debug')('app:startup')
 const dbDebugger = require('debug')('app:db')
-// const config = require('configurarion')
+const config = require('config')
+const logger = require('./logger')
 const morgan = require('morgan')
 const helmet = require('helmet')
 const courses = require('./routes/courses')
@@ -11,13 +12,14 @@ const app = express()
 app.set('view engine', 'pug')
 app.set('views', './views') //default
 
-console.log(`NODE_ENV: + ${process.env.NODE_ENV}`)
-console.log(`app: ${app.get('env')}`)
-
 app.use(express.json())
+app.use(logger)
 app.use(express.urlencoded({extended : true}))
 app.use(express.static('public'))
 app.use(helmet())
+
+console.log(`App name:${config.get('name')}`)
+console.log(`password:${config.get('mail.password')}`)
 
 if (app.get('env') === 'development') {
     app.use(morgan('dev'))
