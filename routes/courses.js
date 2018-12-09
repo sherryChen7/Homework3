@@ -2,8 +2,17 @@ const Joi = require('Joi')
 const express = require('express')
 const router = express.Router()
 
-// console.log(`NODE_ENV: + ${process.env.NODE_ENV}`)
-// console.log(`app: ${router.get('env')}`)
+const deviceProvider = [
+    {providerContractAddress:1, providerAccount:'123'},
+    {providerContractAddress:2, providerAccount:'234'},
+    {providerContractAddress:2, providerAccount:'345'}
+]
+
+const courses = [
+    {id:1, name:'course1'},
+    {id:2, name:'course2'},
+    {id:3, name:'course3'}
+]
 
 const courses = [
     {id:1, name:'course1'},
