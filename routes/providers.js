@@ -1,14 +1,7 @@
+const { Provider, validate } = require('../models/provider')
 const mongoose = require('mongoose')
-const Joi = require('Joi')
 const express = require('express')
 const router = express.Router()
-
-const providerSchema = new mongoose.Schema({
-    providerContractAddress: {type: String, required: true},
-    providerAccount: String
-})
-
-const Provider = mongoose.model('Provider', providerSchema)
 
 router.get('/', async (req, res) => {
     const provider = await Provider.find().sort('providerContractAddress')
@@ -16,7 +9,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const { error } = validateCourse(req.body)
+    const { error } = validate(req.body)
     if(error) {
         return res.status(404).send(error.details[0].message)
     }
@@ -27,7 +20,7 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-    const { error } = validateCourse(req.body) // result.error
+    const { error } = validate(req.body) // result.error
     if(error) {
         return res.status(404).send(error.details[0].message)
     }
@@ -60,12 +53,5 @@ router.get('/:id', async (req, res) => {
         return res.status(404).send('The provider with the given ID cannot find.')
     res.send(provider)
 })
-
-function validateCourse(course) {
-    const schema = {
-        providerContractAddress: Joi.string().min(3).required()
-    };
-    return Joi.validate(course, schema)
-}
 
 module.exports = router

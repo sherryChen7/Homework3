@@ -1,15 +1,7 @@
+const { Device, validate } = require('../models/device')
 const mongoose = require('mongoose')
-const Joi = require('Joi')
 const express = require('express')
 const router = express.Router()
-
-const deivceSchema = new mongoose.Schema({
-    deivceID: {type: String, required: true},
-    deivceContractAddress: String,
-    providerContractAddress: String
-})
-
-const Device = mongoose.model('Device', deivceSchema)
 
 router.get('/', async (req, res) => {
     const device = await Device.find()
@@ -17,7 +9,7 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const { error } = validateDevice(req.body)
+    const { error } = validate(req.body)
     if(error) {
         return res.status(404).send(error.details[0].message)
     }
@@ -32,7 +24,7 @@ router.post('/', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
-    const { error } = validateDevice(req.body) // result.error
+    const { error } = validate(req.body) // result.error
     if(error) {
         return res.status(404).send(error.details[0].message)
     }
@@ -65,12 +57,5 @@ router.get('/:id', async (req, res) => {
         return res.status(404).send('The device with the given ID cannot find.')
     res.send(device)
 })
-
-function validateDevice(device) {
-    const schema = {
-        providerContractAddress: Joi.string().min(3).required()
-    };
-    return Joi.validate(device, schema)
-}
 
 module.exports = router
