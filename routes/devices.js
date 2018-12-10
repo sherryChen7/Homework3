@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     }
 
     let device = new Device({ 
-        deivceID: req.body.deivceID, 
+        deviceID: req.body.deviceID, 
         deivceContractAddress: req.body.deivceContractAddress, 
         providerContractAddress: req.body.providerContractAddress 
     })
@@ -29,7 +29,7 @@ router.put('/:id', async (req, res) => {
         return res.status(404).send(error.details[0].message)
     }
 
-    const device = await Device.findByIdAndUpdate(req.params.id, { deivceID: req.body.deivceID }, {
+    const device = await Device.findByIdAndUpdate(req.params.id, { deviceID: req.body.deviceID }, {
         new: true
     })
 

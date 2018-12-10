@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const helmet = require('helmet')
 const providers = require('./routes/providers')
 const devices = require('./routes/devices')
+const transactions = require('./routes/transactions')
 const home = require('./routes/home')
 const express = require('express')
 const app = express()
@@ -39,6 +40,7 @@ app.use(function(req, res, next){
 
 app.use('/api/providers', providers)
 app.use('/api/devices', devices)
+app.use('/api/transactions', transactions)
 app.use('/', home)
 
 const port = process.env.PORT || 3000
