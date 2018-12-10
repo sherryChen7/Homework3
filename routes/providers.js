@@ -10,24 +10,6 @@ const providerSchema = new mongoose.Schema({
 
 const Provider = mongoose.model('Provider', providerSchema)
 
-const deviceProvider = [
-    {providerContractAddress:1, providerAccount:'123'},
-    {providerContractAddress:2, providerAccount:'234'},
-    {providerContractAddress:2, providerAccount:'345'}
-]
-
-// const courses = [
-//     {id:1, name:'course1'},
-//     {id:2, name:'course2'},
-//     {id:3, name:'course3'}
-// ]
-
-// const courses = [
-//     {id:1, name:'course1'},
-//     {id:2, name:'course2'},
-//     {id:3, name:'course3'}
-// ]
-
 router.get('/', async (req, res) => {
     const provider = await Provider.find().sort('providerContractAddress')
     res.send(provider)

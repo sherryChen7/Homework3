@@ -5,7 +5,7 @@ mongoose.connect('mongodb://localhost/playground')
 .catch(error => console.error('Could not connect to MongoDB...'))
 
 const providerSchema = new mongoose.Schema({
-    providerContractAddress: String,
+    providerContractAddress: {type: String, required: true},
     providerAccount: String
 })
 
@@ -27,11 +27,17 @@ const Provider = mongoose.model('Provider', providerSchema)
 
 async function createProvider() {  
     const provider = new Provider({
-        providerContractAddress: '1',
+        // providerContractAddress: '1',
         providerAccount: "223"
     })
-    const result = await provider.save()
-    console.log(result)
+
+    try {
+        // await provider.validate()
+        const result = await provider.save()
+        console.log(result)
+    } catch (error) {
+        console.log(error.message)
+    }
 }
 
 createProvider()

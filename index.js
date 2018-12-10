@@ -1,13 +1,18 @@
+const mongoose = require('mongoose')
 const startupDebugger = require('debug')('app:startup')
-const dbDebugger = require('debug')('app:db')
 const config = require('config')
 const logger = require('./logger')
 const morgan = require('morgan')
 const helmet = require('helmet')
-const courses = require('./routes/courses')
+const providers = require('./routes/providers')
+const devices = require('./routes/devices')
 const home = require('./routes/home')
 const express = require('express')
 const app = express()
+
+mongoose.connect('mongodb://localhost/vidly')
+.then(() => console.log('Connected to MongoDB...'))
+.catch(error => console.error('Could not connect to MongoDB...'))
 
 app.set('view engine', 'pug')
 app.set('views', './views') //default
@@ -32,7 +37,8 @@ app.use(function(req, res, next){
     next()
 })
 
-app.use('/api/courses', courses)
+app.use('/api/providers', providers)
+app.use('/api/devices', devices)
 app.use('/', home)
 
 const port = process.env.PORT || 3000
