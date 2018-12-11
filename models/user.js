@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-const User = mongoose.model('User', providerSchema)
+const User = mongoose.model('User', userSchema)
 
 function validateUser(user) {
     const schema = {
