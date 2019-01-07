@@ -7,6 +7,7 @@ const helmet = require('helmet')
 const providers = require('./routes/providers')
 const devices = require('./routes/devices')
 const transactions = require('./routes/transactions')
+const users = require('./routes/users')
 const home = require('./routes/home')
 const express = require('express')
 const app = express()
@@ -24,8 +25,8 @@ app.use(express.urlencoded({extended : true}))
 app.use(express.static('public'))
 app.use(helmet())
 
-console.log(`App name:${config.get('name')}`)
-console.log(`password:${config.get('mail.password')}`)
+// console.log(`App name:${config.get('name')}`)
+// console.log(`password:${config.get('mail.password')}`)
 
 if (app.get('env') === 'development') {
     app.use(morgan('dev'))
@@ -41,6 +42,7 @@ app.use(function(req, res, next){
 app.use('/api/providers', providers)
 app.use('/api/devices', devices)
 app.use('/api/transactions', transactions)
+app.use('/api/users', users)
 app.use('/', home)
 
 const port = process.env.PORT || 3000
